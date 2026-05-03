@@ -50,3 +50,16 @@ print("Eikichi's Hand: "+str(eikichihand))
 print("Ginko's Hand: "+str(ginkohand))
 print("Maya's Hand: "+str(mayahand))
 print("Yukki's Hand: "+str(yukkihand))
+#gameplay start idk
+def checkAJ(hand):
+    if ((hand[0][0]=="A" or hand[1][0]=="A") and (hand[0][0]=="J" or hand[1][0]=="J")) and (hand[0][1] == hand[1][1]):
+        if hand[0][1] == "♠":
+            return "SPAJ"
+        else:
+            return "AJ"
+    else:
+        return "NoAJ"
+def checkBJ(hand):
+    #WIP
+    return "NoBJ"
+
