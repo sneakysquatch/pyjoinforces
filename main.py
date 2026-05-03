@@ -22,10 +22,7 @@ for item in ["♠","♥","♣","♦"]:
         shuffled.append(face+item)
 random.shuffle(shuffled)
 def validbet(bet):
-    if bet > -1 and bet < 11:
-        return True
-    else:
-        return False
+    return bet > -1 and bet < 11
 while True:
     try:
         tatsuyabet = int(input("Input Tatsuya's bet "))
@@ -50,7 +47,7 @@ print("Eikichi's Hand: "+str(eikichihand))
 print("Ginko's Hand: "+str(ginkohand))
 print("Maya's Hand: "+str(mayahand))
 print("Yukki's Hand: "+str(yukkihand))
-#gameplay start idk
+#functions for checking hands
 def checkAJ(hand):
     if ((hand[0][0]=="A" or hand[1][0]=="A") and (hand[0][0]=="J" or hand[1][0]=="J")) and (hand[0][1] == hand[1][1]):
         if hand[0][1] == "♠":
@@ -60,6 +57,14 @@ def checkAJ(hand):
     else:
         return "NoAJ"
 def checkBJ(hand):
-    #WIP
-    return "NoBJ"
-
+    if (checkAJ(hand)=="NoAJ") and (hand[0][0]=="A" or hand[1][0]=="A") and ((hand[0][0]==10 or hand[1][0]==10)or(hand[0][0]=="J" or hand[1][0]=="J")or(hand[0][0]=="Q" or hand[1][0]=="Q")or(hand[0][0]=="K" or hand[1][0]=="K")):
+        return "BJ"
+    else:
+        return "NoBJ"
+#test for checking hands
+print("Dealer has: " +checkAJ(dealerhand)+" "+checkBJ(dealerhand))
+print("Tatsuya has: "+checkAJ(tatsuyahand)+" "+checkBJ(tatsuyahand))
+print("Eikichi has: "+checkAJ(eikichihand)+" "+checkBJ(eikichihand))
+print("Ginko has: "  +checkAJ(ginkohand)+" "+checkBJ(ginkohand))
+print("Maya has: "   +checkAJ(mayahand)+" "+checkBJ(mayahand))
+print("Yukki has: "  +checkAJ(yukkihand)+" "+checkBJ(yukkihand))
