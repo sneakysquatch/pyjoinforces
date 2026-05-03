@@ -12,17 +12,15 @@ mayahand = []
 yukkihand = []
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
-    unshuffled.append(item+"A")
-    shuffled.append(item+"A")
+    unshuffled.append("A"+item)
+    shuffled.append("A"+item)
     for i in range(2,11):
-        unshuffled.append(item+str(i))
-        shuffled.append(item+str(i))
+        unshuffled.append(str(i)+item)
+        shuffled.append(str(i)+item)
     for face in ["J","Q","K"]:
-        unshuffled.append(item+face)
-        shuffled.append(item+face)
+        unshuffled.append(face+item)
+        shuffled.append(face+item)
 random.shuffle(shuffled)
-print(unshuffled)
-print(shuffled)
 def validbet(bet):
     if bet > -1 and bet < 11:
         return True
@@ -41,3 +39,14 @@ while True:
     if validbet(tatsuyabet) and validbet(eikichibet) and validbet(ginkobet) and validbet(mayabet) and validbet(yukkibet) and (tatsuyabet>0 or eikichibet>0 or ginkobet>0 or mayabet>0 or yukkibet>0):
         break
     print("One or more invalid bets. Please input all bets as a valid number and bet on at least one player.")
+for hand in [dealerhand, tatsuyahand, eikichihand, ginkohand, mayahand, yukkihand]:
+    hand.append(shuffled[0])
+    shuffled.pop(0)
+    hand.append(shuffled[0])
+    shuffled.pop(0)
+print("Dealer's Hand: "+str(dealerhand))
+print("Tatsuya's Hand: "+str(tatsuyahand))
+print("Eikichi's Hand: "+str(eikichihand))
+print("Ginko's Hand: "+str(ginkohand))
+print("Maya's Hand: "+str(mayahand))
+print("Yukki's Hand: "+str(yukkihand))
