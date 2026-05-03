@@ -10,6 +10,8 @@ eikichihand = []
 ginkohand = []
 mayahand = []
 yukkihand = []
+cardvalues = {2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,"J":10,"Q":10,"K":10}
+suits = ["♠","♥","♣","♦"]
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
     unshuffled.append("A"+item)
@@ -68,3 +70,12 @@ print("Eikichi has: "+checkAJ(eikichihand)+" "+checkBJ(eikichihand))
 print("Ginko has: "  +checkAJ(ginkohand)+" "+checkBJ(ginkohand))
 print("Maya has: "   +checkAJ(mayahand)+" "+checkBJ(mayahand))
 print("Yukki has: "  +checkAJ(yukkihand)+" "+checkBJ(yukkihand))
+#figure out the numerical value of a given hand idk
+def checkvalue(hand):
+    pass
+#print dealer status
+print("The dealer has:")
+if(checkAJ(dealerhand)!="NoAJ") or (checkBJ(dealerhand)=="BJ"):
+    print("A BLACKJACK!")
+else:
+    print(checkvalue(dealerhand))
