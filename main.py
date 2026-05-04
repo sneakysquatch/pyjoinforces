@@ -8,6 +8,12 @@ eikichibet = 0
 ginkobet = 0
 mayabet = 0
 yukkibet = 0
+dealerstatus = "active"
+tatsuyastatus = "active"
+eikichistatus = "active"
+ginkostatus = "active"
+mayastatus = "active"
+yukkistatus = "active"
 unshuffled = []
 shuffled = []
 dealerhand = []
@@ -20,6 +26,7 @@ cardvalues = {"1":10,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J"
 players = ["Dealer", "Tatsuya", "Eikichi", "Ginko", "Maya", "Yukki"]
 playerhands = {"Dealer":dealerhand, "Tatsuya": tatsuyahand, "Eikichi": eikichihand, "Ginko": ginkohand, "Maya": mayahand, "Yukki": yukkihand}
 playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
+playerstatus = {"Dealer":dealerstatus, "Tatsuya": tatsuyastatus, "Eikichi": eikichistatus, "Ginko": ginkostatus, "Maya": mayastatus, "Yukki": yukkistatus}
 suits = ["♠","♥","♣","♦"]
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
@@ -106,11 +113,13 @@ for player in players[1:]:
             print(str(checkvalue(playerhands[player])) + " (Splittable)")
         else:
             print(checkvalue(playerhands[player]))
-
-dealerstatus = "active"
-tatsuyastatus = "active"
-eikichistatus = "active"
-ginkostatus = "active"
-mayastatus = "active"
-yukkistatus = "active"
 #game start
+while "active" in playerstatus.values():
+    for player in players[1:]:
+        if playerstatus[player] == "active":
+            if checkvalue(player)>21:
+                print(f"{player} busted")
+                playerstatus[player] = "bust"
+            elif checkAJ(player) == "SPAJ":
+                print(f"{player} has a spade ace-jack")
+            
