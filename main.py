@@ -10,7 +10,7 @@ eikichihand = []
 ginkohand = []
 mayahand = []
 yukkihand = []
-cardvalues = {2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,"J":10,"Q":10,"K":10}
+cardvalues = {"1":10,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J":10,"Q":10,"K":10}
 suits = ["♠","♥","♣","♦"]
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
@@ -59,7 +59,7 @@ def checkAJ(hand):
     else:
         return "NoAJ"
 def checkBJ(hand):
-    if (checkAJ(hand)=="NoAJ") and (hand[0][0]=="A" or hand[1][0]=="A") and ((hand[0][0]==10 or hand[1][0]==10)or(hand[0][0]=="J" or hand[1][0]=="J")or(hand[0][0]=="Q" or hand[1][0]=="Q")or(hand[0][0]=="K" or hand[1][0]=="K")):
+    if (checkAJ(hand)=="NoAJ") and (hand[0][0]=="A" or hand[1][0]=="A") and ((hand[0][0]=="1" or hand[1][0]=="1")or(hand[0][0]=="J" or hand[1][0]=="J")or(hand[0][0]=="Q" or hand[1][0]=="Q")or(hand[0][0]=="K" or hand[1][0]=="K")):
         return "BJ"
     else:
         return "NoBJ"
@@ -72,10 +72,84 @@ print("Maya has: "   +checkAJ(mayahand)+" "+checkBJ(mayahand))
 print("Yukki has: "  +checkAJ(yukkihand)+" "+checkBJ(yukkihand))
 #figure out the numerical value of a given hand idk
 def checkvalue(hand):
-    pass
-#print dealer status
+    for card in hand:
+        if(card[0]=="A"):
+            hand.append(card)
+            hand.remove(card)
+    value = 0
+    for card in hand:
+        if not card[0] == "A":
+            value += cardvalues[card[0]]
+        else:
+            if value + 11 <= 21:
+                value += 11
+            else:
+                value +=1
+    return value
+#print statuses
 print("The dealer has:")
 if(checkAJ(dealerhand)!="NoAJ") or (checkBJ(dealerhand)=="BJ"):
     print("A BLACKJACK!")
 else:
     print(checkvalue(dealerhand))
+
+print("Tatsuya has:")
+if(checkBJ(tatsuyahand)=="BJ"):
+    print("A BLACKJACK!")
+elif checkAJ(tatsuyahand)=="SPAJ":
+    print("A SPADE ACE-JACK!")
+elif checkAJ(tatsuyahand)=="AJ":
+    print("AN ACE-JACK!")
+else:
+    if(tatsuyahand[0][0]==tatsuyahand[1][0]):
+        print(str(checkvalue(tatsuyahand)) + " (Splittable)")
+    else:
+        print(checkvalue(tatsuyahand))
+print("Eikichi has:")
+if(checkBJ(eikichihand)=="BJ"):
+    print("A BLACKJACK!")
+elif checkAJ(eikichihand)=="SPAJ":
+    print("A SPADE ACE-JACK!")
+elif checkAJ(eikichihand)=="AJ":
+    print("AN ACE-JACK!")
+else:
+    if(eikichihand[0][0]==eikichihand[1][0]):
+        print(str(checkvalue(eikichihand)) + " (Splittable)")
+    else:
+        print(checkvalue(eikichihand))
+print("Ginko has:")
+if(checkBJ(ginkohand)=="BJ"):
+    print("A BLACKJACK!")
+elif checkAJ(ginkohand)=="SPAJ":
+    print("A SPADE ACE-JACK!")
+elif checkAJ(ginkohand)=="AJ":
+    print("AN ACE-JACK!")
+else:
+    if(ginkohand[0][0]==ginkohand[1][0]):
+        print(str(checkvalue(ginkohand)) + " (Splittable)")
+    else:
+        print(checkvalue(ginkohand))
+print("Maya has:")
+if(checkBJ(mayahand)=="BJ"):
+    print("A BLACKJACK!")
+elif checkAJ(mayahand)=="SPAJ":
+    print("A SPADE ACE-JACK!")
+elif checkAJ(mayahand)=="AJ":
+    print("AN ACE-JACK!")
+else:
+    if(mayahand[0][0]==mayahand[1][0]):
+        print(str(checkvalue(mayahand)) + " (Splittable)")
+    else:
+        print(checkvalue(mayahand))
+print("Yukki has:")
+if(checkBJ(yukkihand)=="BJ"):
+    print("A BLACKJACK!")
+elif checkAJ(yukkihand)=="SPAJ":
+    print("A SPADE ACE-JACK!")
+elif checkAJ(yukkihand)=="AJ":
+    print("AN ACE-JACK!")
+else:
+    if(yukkihand[0][0]==yukkihand[1][0]):
+        print(str(checkvalue(yukkihand)) + " (Splittable)")
+    else:
+        print(checkvalue(yukkihand))
