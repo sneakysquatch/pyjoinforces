@@ -22,11 +22,18 @@ eikichihand = []
 ginkohand = []
 mayahand = []
 yukkihand = []
+dealermove = None
+tatsuyamove = None
+eikichimove = None
+ginkomove = None
+mayamove = None
+yukkimove = None
 cardvalues = {"1":10,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J":10,"Q":10,"K":10}
 players = ["Dealer", "Tatsuya", "Eikichi", "Ginko", "Maya", "Yukki"]
 playerhands = {"Dealer":dealerhand, "Tatsuya": tatsuyahand, "Eikichi": eikichihand, "Ginko": ginkohand, "Maya": mayahand, "Yukki": yukkihand}
 playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
 playerstatus = {"Dealer":dealerstatus, "Tatsuya": tatsuyastatus, "Eikichi": eikichistatus, "Ginko": ginkostatus, "Maya": mayastatus, "Yukki": yukkistatus}
+playermove = {"Dealer":dealermove, "Tatsuya": tatsuyamove, "Eikichi": eikichimove, "Ginko": ginkomove, "Maya": mayamove, "Yukki": yukkimove}
 suits = ["♠","♥","♣","♦"]
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
@@ -113,13 +120,76 @@ for player in players[1:]:
             print(str(checkvalue(playerhands[player])) + " (Splittable)")
         else:
             print(checkvalue(playerhands[player]))
+for players in players{1:]:
+    
 #game start
 while "active" in playerstatus.values():
     for player in players[1:]:
-        if playerstatus[player] == "active":
+        while playerstatus[player] == "active":
             if checkvalue(player)>21:
                 print(f"{player} busted")
                 playerstatus[player] = "bust"
             elif checkAJ(player) == "SPAJ":
-                print(f"{player} has a spade ace-jack")
+                print(f"{player} has a spade ace-jack. Standing")
+                playerstatus[player] = "SPAJ"
+            elif checkAJ(player) == "AJ":
+                print(f"{player} has an ace-jack. Standing.")
+                playerstatus[player]= "AJ"
+            elif checkBJ(player) == "BJ":
+                print(f"{player} has a blackjack. Standing.")
+                playerstatus[player]= "BJ"
+            if len(playerhands[player]) == 2
+                if playerstatus[player] == "active" and not (playerhands[player][0][0]==playerhands[player][1][0]):
+                    print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, or T to double down.")
+                    while True:
+                        playermove[player] = input()
+                        if playermove[player] in ("X","O","T"):
+                            break
+                        print("Please input a single letter corresponding to a valid command.")
+                    if playermove[player] == "X":
+                        hand.append(shuffled[0])
+                        shuffled.pop(0)
+                        print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
+                    if playermove[player] == "O":
+                        playerstatus[player]= "stand"
+                    if playermove[player] == "T":
+                        #need to figure out how DD works pass for now
+                        pass
+                elif playerstatus[player] == "active" and (playerhands[player][0][0]==playerhands[player][1][0]):
+                    print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, S to split, or T to double down.")
+                    while True:
+                        playermove[player] = input()
+                        if playermove[player] in ("X","O","T","S"):
+                            break
+                        print("Please input a single letter corresponding to a valid command.")
+                    if playermove[player] == "X":
+                        hand.append(shuffled[0])
+                        shuffled.pop(0)
+                        print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
+                    if playermove[player] == "O":
+                        playerstatus[player]= "stand"
+                    if playermove[player] == "T":
+                        #need to figure out how DD works pass for now
+                        pass
+                    if playermove[player] == "S":
+                        #split is a wip
+                        pass
+            elif playerstatus[player] == "active":
+                print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit or O to stand.")
+                while True:
+                    playermove[player] = input()
+                    if playermove[player] in ("X","O"):
+                        break
+                    print("Please input a single letter corresponding to a valid command.")
+                if playermove[player] == "X":
+                        hand.append(shuffled[0])
+                        shuffled.pop(0)
+                        print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
+                if playermove[player] == "O":
+                        playerstatus[player]= "stand"
+                
+                
+
             
+                    
+                    
