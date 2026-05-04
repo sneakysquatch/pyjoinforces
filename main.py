@@ -66,7 +66,8 @@ for hand in playerhands.values():
     shuffled.pop(0)
     hand.append(shuffled[0])
     shuffled.pop(0)
-for player in players:
+print(f"Dealer's first card is: {dealerhand[0]}")
+for player in players[1:]:
     print(f"{player}'s Hand: {str((playerhands[player]))}")
 #functions for checking hands
 def checkAJ(hand):
@@ -83,8 +84,8 @@ def checkBJ(hand):
     else:
         return "NoBJ"
 #test for checking hands
-for player in players:
-    print(f"{player} has: {checkAJ(playerhands[player])} {checkBJ(playerhands[player])}")
+#for player in players:
+#    print(f"{player} has: {checkAJ(playerhands[player])} {checkBJ(playerhands[player])}")
 #figure out the numerical value of a given hand idk
 def checkvalue(hand):
     for card in hand:
@@ -102,11 +103,6 @@ def checkvalue(hand):
                 value +=1
     return value
 #print statuses
-print("The dealer has:")
-if(checkAJ(dealerhand)!="NoAJ") or (checkBJ(dealerhand)=="BJ"):
-    print("A BLACKJACK!")
-else:
-    print(checkvalue(dealerhand))
 for player in players[1:]:
     print(f"{player} has:")
     if(checkBJ(playerhands[player])=="BJ"):
@@ -186,7 +182,8 @@ while "active" in playerstatus.values():
                 if playermove[player] == "O":
                         playerstatus[player]= "stand"
                 
-                
+while(dealerstatus == "active"):
+    print(f"Dealer
 
             
                     
