@@ -69,12 +69,8 @@ def checkBJ(hand):
     else:
         return "NoBJ"
 #test for checking hands
-print("Dealer has: " +checkAJ(dealerhand)+" "+checkBJ(dealerhand))
-print("Tatsuya has: "+checkAJ(tatsuyahand)+" "+checkBJ(tatsuyahand))
-print("Eikichi has: "+checkAJ(eikichihand)+" "+checkBJ(eikichihand))
-print("Ginko has: "  +checkAJ(ginkohand)+" "+checkBJ(ginkohand))
-print("Maya has: "   +checkAJ(mayahand)+" "+checkBJ(mayahand))
-print("Yukki has: "  +checkAJ(yukkihand)+" "+checkBJ(yukkihand))
+for player in players:
+    print(f"{player} has: {checkAJ(playerhands[player])} {checkBJ(playerhands[player])}")
 #figure out the numerical value of a given hand idk
 def checkvalue(hand):
     for card in hand:
@@ -97,67 +93,20 @@ if(checkAJ(dealerhand)!="NoAJ") or (checkBJ(dealerhand)=="BJ"):
     print("A BLACKJACK!")
 else:
     print(checkvalue(dealerhand))
+for player in players[1:]:
+    print(f"{player} has:")
+    if(checkBJ(playerhands[player])=="BJ"):
+        print("A BLACKJACK!")
+    elif checkAJ(playerhands[player])=="SPAJ":
+        print("A SPADE ACE-JACK!")
+    elif checkAJ(playerhands[player])=="AJ":
+        print("AN ACE-JACK!")
+    else:
+        if(playerhands[player][0][0]==playerhands[player][1][0]):
+            print(str(checkvalue(playerhands[player])) + " (Splittable)")
+        else:
+            print(checkvalue(playerhands[player]))
 
-print("Tatsuya has:")
-if(checkBJ(tatsuyahand)=="BJ"):
-    print("A BLACKJACK!")
-elif checkAJ(tatsuyahand)=="SPAJ":
-    print("A SPADE ACE-JACK!")
-elif checkAJ(tatsuyahand)=="AJ":
-    print("AN ACE-JACK!")
-else:
-    if(tatsuyahand[0][0]==tatsuyahand[1][0]):
-        print(str(checkvalue(tatsuyahand)) + " (Splittable)")
-    else:
-        print(checkvalue(tatsuyahand))
-print("Eikichi has:")
-if(checkBJ(eikichihand)=="BJ"):
-    print("A BLACKJACK!")
-elif checkAJ(eikichihand)=="SPAJ":
-    print("A SPADE ACE-JACK!")
-elif checkAJ(eikichihand)=="AJ":
-    print("AN ACE-JACK!")
-else:
-    if(eikichihand[0][0]==eikichihand[1][0]):
-        print(str(checkvalue(eikichihand)) + " (Splittable)")
-    else:
-        print(checkvalue(eikichihand))
-print("Ginko has:")
-if(checkBJ(ginkohand)=="BJ"):
-    print("A BLACKJACK!")
-elif checkAJ(ginkohand)=="SPAJ":
-    print("A SPADE ACE-JACK!")
-elif checkAJ(ginkohand)=="AJ":
-    print("AN ACE-JACK!")
-else:
-    if(ginkohand[0][0]==ginkohand[1][0]):
-        print(str(checkvalue(ginkohand)) + " (Splittable)")
-    else:
-        print(checkvalue(ginkohand))
-print("Maya has:")
-if(checkBJ(mayahand)=="BJ"):
-    print("A BLACKJACK!")
-elif checkAJ(mayahand)=="SPAJ":
-    print("A SPADE ACE-JACK!")
-elif checkAJ(mayahand)=="AJ":
-    print("AN ACE-JACK!")
-else:
-    if(mayahand[0][0]==mayahand[1][0]):
-        print(str(checkvalue(mayahand)) + " (Splittable)")
-    else:
-        print(checkvalue(mayahand))
-print("Yukki has:")
-if(checkBJ(yukkihand)=="BJ"):
-    print("A BLACKJACK!")
-elif checkAJ(yukkihand)=="SPAJ":
-    print("A SPADE ACE-JACK!")
-elif checkAJ(yukkihand)=="AJ":
-    print("AN ACE-JACK!")
-else:
-    if(yukkihand[0][0]==yukkihand[1][0]):
-        print(str(checkvalue(yukkihand)) + " (Splittable)")
-    else:
-        print(checkvalue(yukkihand))
 dealerstatus = "active"
 tatsuyastatus = "active"
 eikichistatus = "active"
