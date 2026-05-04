@@ -120,8 +120,6 @@ for player in players[1:]:
             print(str(checkvalue(playerhands[player])) + " (Splittable)")
         else:
             print(checkvalue(playerhands[player]))
-for players in players{1:]:
-    
 #game start
 while "active" in playerstatus.values():
     for player in players[1:]:
@@ -138,7 +136,7 @@ while "active" in playerstatus.values():
             elif checkBJ(player) == "BJ":
                 print(f"{player} has a blackjack. Standing.")
                 playerstatus[player]= "BJ"
-            if len(playerhands[player]) == 2
+            if len(playerhands[player]) == 2:
                 if playerstatus[player] == "active" and not (playerhands[player][0][0]==playerhands[player][1][0]):
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, or T to double down.")
                     while True:
