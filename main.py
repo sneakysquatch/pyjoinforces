@@ -153,3 +153,11 @@ else:
         print(str(checkvalue(yukkihand)) + " (Splittable)")
     else:
         print(checkvalue(yukkihand))
+dealerstatus = "active"
+tatsuyastatus = "active"
+eikichistatus = "active"
+ginkostatus = "active"
+mayastatus = "active"
+yukkistatus = "active"
+def isactive(status)
+#game start
