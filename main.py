@@ -2,6 +2,12 @@
 import random
 import pygame
 #declare variables ahead of time for cleanness
+dealerbet = 0
+tatsuyabet = 0
+eikichibet = 0
+ginkobet = 0
+mayabet = 0
+yukkibet = 0
 unshuffled = []
 shuffled = []
 dealerhand = []
@@ -11,6 +17,9 @@ ginkohand = []
 mayahand = []
 yukkihand = []
 cardvalues = {"1":10,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J":10,"Q":10,"K":10}
+players = ["Dealer", "Tatsuya", "Eikichi", "Ginko", "Maya", "Yukki"]
+playerhands = {"Dealer":dealerhand, "Tatsuya": tatsuyahand, "Eikichi": eikichihand, "Ginko": ginkohand, "Maya": mayahand, "Yukki": yukkihand}
+playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
 suits = ["♠","♥","♣","♦"]
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
@@ -38,17 +47,13 @@ while True:
     if validbet(tatsuyabet) and validbet(eikichibet) and validbet(ginkobet) and validbet(mayabet) and validbet(yukkibet) and (tatsuyabet>0 or eikichibet>0 or ginkobet>0 or mayabet>0 or yukkibet>0):
         break
     print("One or more invalid bets. Please input all bets as a valid number and bet on at least one player.")
-for hand in [dealerhand, tatsuyahand, eikichihand, ginkohand, mayahand, yukkihand]:
+for hand in playerhands.values():
     hand.append(shuffled[0])
     shuffled.pop(0)
     hand.append(shuffled[0])
     shuffled.pop(0)
-print("Dealer's Hand: "+str(dealerhand))
-print("Tatsuya's Hand: "+str(tatsuyahand))
-print("Eikichi's Hand: "+str(eikichihand))
-print("Ginko's Hand: "+str(ginkohand))
-print("Maya's Hand: "+str(mayahand))
-print("Yukki's Hand: "+str(yukkihand))
+for player in players:
+    print(f"{player}'s Hand: {str((playerhands[player]))}")
 #functions for checking hands
 def checkAJ(hand):
     if ((hand[0][0]=="A" or hand[1][0]=="A") and (hand[0][0]=="J" or hand[1][0]=="J")) and (hand[0][1] == hand[1][1]):
@@ -159,5 +164,4 @@ eikichistatus = "active"
 ginkostatus = "active"
 mayastatus = "active"
 yukkistatus = "active"
-def isactive(status)
 #game start
