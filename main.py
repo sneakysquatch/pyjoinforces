@@ -117,10 +117,11 @@ for player in players[1:]:
         else:
             print(checkvalue(playerhands[player]))
 #game start
+playerstatus.pop("Dealer")
 while "active" in playerstatus.values():
     for player in players[1:]:
         while playerstatus[player] == "active":
-            if checkvalue(player)>21:
+            if checkvalue(playerhands[player])>21:
                 print(f"{player} busted")
                 playerstatus[player] = "bust"
             elif checkAJ(player) == "SPAJ":
@@ -137,53 +138,53 @@ while "active" in playerstatus.values():
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, or T to double down.")
                     while True:
                         playermove[player] = input()
-                        if playermove[player] in ("X","O","T"):
+                        if playermove[player].upper() in ("X","O","T"):
                             break
                         print("Please input a single letter corresponding to a valid command.")
-                    if playermove[player] == "X":
-                        hand.append(shuffled[0])
+                    if playermove[player].upper() == "X":
+                        playerhands[player].append(shuffled[0])
                         shuffled.pop(0)
                         print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
-                    if playermove[player] == "O":
+                    if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
-                    if playermove[player] == "T":
+                    if playermove[player].upper() == "T":
                         #need to figure out how DD works pass for now
                         pass
                 elif playerstatus[player] == "active" and (playerhands[player][0][0]==playerhands[player][1][0]):
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, S to split, or T to double down.")
                     while True:
                         playermove[player] = input()
-                        if playermove[player] in ("X","O","T","S"):
+                        if playermove[player].upper() in ("X","O","T","S"):
                             break
                         print("Please input a single letter corresponding to a valid command.")
-                    if playermove[player] == "X":
-                        hand.append(shuffled[0])
+                    if playermove[player].upper() == "X":
+                        playerhands[player].append(shuffled[0])
                         shuffled.pop(0)
                         print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
-                    if playermove[player] == "O":
+                    if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
-                    if playermove[player] == "T":
+                    if playermove[player].upper() == "T":
                         #need to figure out how DD works pass for now
                         pass
-                    if playermove[player] == "S":
+                    if playermove[player].upper() == "S":
                         #split is a wip
                         pass
             elif playerstatus[player] == "active":
                 print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit or O to stand.")
                 while True:
                     playermove[player] = input()
-                    if playermove[player] in ("X","O"):
+                    if playermove[player].upper() in ("X","O"):
                         break
                     print("Please input a single letter corresponding to a valid command.")
-                if playermove[player] == "X":
-                        hand.append(shuffled[0])
+                if playermove[player].upper() == "X":
+                        playerhands[player].append(shuffled[0])
                         shuffled.pop(0)
                         print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}.")
-                if playermove[player] == "O":
+                if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
-                
+playerstatus.update({"Dealer":dealerstatus})
 while(dealerstatus == "active"):
-    print(f"Dealer
+    print(f"Dealer")
 
             
                     
