@@ -186,6 +186,7 @@ playerstatus.update({"Dealer":dealerstatus})
 while(dealerstatus == "active"):
     if(checkvalue(dealerhand))>21:
         dealerstatus == "bust"
+        print("Dealer busted.")
     elif(checkvalue(dealerhand))<17:
         dealerhand.append(shuffled[0])
         shuffled.pop(0)
@@ -195,6 +196,7 @@ while(dealerstatus == "active"):
             shuffled.pop(0)
     else:
         dealerstatus == "stand"
-            
+        print(f"Dealer stands on {checkvalue(dealerhand}.")
+
                     
                     
