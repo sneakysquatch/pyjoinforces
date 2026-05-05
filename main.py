@@ -184,8 +184,17 @@ while "active" in playerstatus.values():
                         playerstatus[player]= "stand"
 playerstatus.update({"Dealer":dealerstatus})
 while(dealerstatus == "active"):
-    print(f"Dealer")
-
+    if(checkvalue(dealerhand))>21:
+        dealerstatus == "bust"
+    elif(checkvalue(dealerhand))<17:
+        dealerhand.append(shuffled[0])
+        shuffled.pop(0)
+    elif(checkvalue(dealerhand)==17 and True:
+            #replace true with checking for soft 17
+            dealerhand.append(shuffled[0])
+            shuffled.pop(0)
+    else:
+        dealerstatus == "stand"
             
                     
                     
