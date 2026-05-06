@@ -2,7 +2,7 @@
 import random
 import pygame
 #declare variables ahead of time for cleanness
-dealerbet = 0
+dealerbet = 5
 tatsuyabet = 0
 eikichibet = 0
 ginkobet = 0
@@ -31,10 +31,10 @@ yukkimove = None
 cardvalues = {"1":10,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"10":10,"J":10,"Q":10,"K":10}
 players = ["Dealer", "Tatsuya", "Eikichi", "Ginko", "Maya", "Yukki"]
 playerhands = {"Dealer":dealerhand, "Tatsuya": tatsuyahand, "Eikichi": eikichihand, "Ginko": ginkohand, "Maya": mayahand, "Yukki": yukkihand}
-playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
 playerstatus = {"Dealer":dealerstatus, "Tatsuya": tatsuyastatus, "Eikichi": eikichistatus, "Ginko": ginkostatus, "Maya": mayastatus, "Yukki": yukkistatus}
 playermove = {"Dealer":dealermove, "Tatsuya": tatsuyamove, "Eikichi": eikichimove, "Ginko": ginkomove, "Maya": mayamove, "Yukki": yukkimove}
 suits = ["♠","♥","♣","♦"]
+dealersoft = "Hard"
 #add cards to deck
 for item in ["♠","♥","♣","♦"]:
     unshuffled.append("A"+item)
@@ -61,14 +61,17 @@ while True:
     if validbet(tatsuyabet) and validbet(eikichibet) and validbet(ginkobet) and validbet(mayabet) and validbet(yukkibet) and (tatsuyabet>0 or eikichibet>0 or ginkobet>0 or mayabet>0 or yukkibet>0):
         break
     print("One or more invalid bets. Please input all bets as a valid number and bet on at least one player.")
-for hand in playerhands.values():
-    hand.append(shuffled[0])
-    shuffled.pop(0)
-    hand.append(shuffled[0])
-    shuffled.pop(0)
+playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
+for player in players:
+    if playerbets[player]!=0:
+        playerhands[player].append(shuffled[0])
+        shuffled.pop(0)
+        playerhands[player].append(shuffled[0])
+        shuffled.pop(0)
 print(f"Dealer's first card is: {dealerhand[0]}")
 for player in players[1:]:
-    print(f"{player}'s Hand: {str((playerhands[player]))}")
+    if playerbets[player]!=0:
+        print(f"{player}'s Hand: {str((playerhands[player]))}")
 #functions for checking hands
 def checkAJ(hand):
     if ((hand[0][0]=="A" or hand[1][0]=="A") and (hand[0][0]=="J" or hand[1][0]=="J")) and (hand[0][1] == hand[1][1]):
@@ -99,27 +102,48 @@ def checkvalue(hand):
         else:
             if value + 11 <= 21:
                 value += 11
+                if(hand == dealerhand):
+                    dealersoft = "soft"
             else:
                 value +=1
     return value
 #print statuses
 for player in players[1:]:
-    print(f"{player} has:")
-    if(checkBJ(playerhands[player])=="BJ"):
-        print("A BLACKJACK!")
-    elif checkAJ(playerhands[player])=="SPAJ":
-        print("A SPADE ACE-JACK!")
-    elif checkAJ(playerhands[player])=="AJ":
-        print("AN ACE-JACK!")
-    else:
-        if(playerhands[player][0][0]==playerhands[player][1][0]):
-            print(str(checkvalue(playerhands[player])) + " (Splittable)")
+    if playerbets[player]!=0:
+        print(f"{player} has:")
+        if(checkBJ(playerhands[player])=="BJ"):
+            print("A BLACKJACK!")
+        elif checkAJ(playerhands[player])=="SPAJ":
+            print("A SPADE ACE-JACK!")
+        elif checkAJ(playerhands[player])=="AJ":
+            print("AN ACE-JACK!")
         else:
-            print(checkvalue(playerhands[player]))
+            if(playerhands[player][0][0]==playerhands[player][1][0]):
+                print(str(checkvalue(playerhands[player])) + " (Splittable)")
+            else:
+                print(checkvalue(playerhands[player]))
+#define special hand checkers
+def issixcards(hand):
+    return len(hand)==6
+def issevencards(hand):
+    return len(hand)==7
+def istripleseven(hand):
+    if len(hand)==3:
+        if (hand[0][0]==7 and hand[1][0]==7 and hand[2][0]==7):
+            return True
+        else:
+            return False
+    else:
+        return False
+def isjuckport(hand):
+    if len(hand)==6:
+        pass
 #game start
 playerstatus.pop("Dealer")
 while "active" in playerstatus.values():
     for player in players[1:]:
+        if playerbets[player] == 0:
+            playerstatus[player] = "inactive"
         while playerstatus[player] == "active":
             if checkvalue(playerhands[player])>21:
                 print(f"{player} busted")
@@ -132,8 +156,9 @@ while "active" in playerstatus.values():
                 playerstatus[player]= "AJ"
             elif checkBJ(player) == "BJ":
                 print(f"{player} has a blackjack. Standing.")
-                playerstatus[player]= "BJ"
-            if len(playerhands[player]) == 2:
+                playerstatus[player] = "BJ"
+                print("googer")
+            elif len(playerhands[player]) == 2:
                 if playerstatus[player] == "active" and not (playerhands[player][0][0]==playerhands[player][1][0]):
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, or T to double down.")
                     while True:
@@ -185,18 +210,18 @@ while "active" in playerstatus.values():
 playerstatus.update({"Dealer":dealerstatus})
 while(dealerstatus == "active"):
     if(checkvalue(dealerhand))>21:
-        dealerstatus == "bust"
-        print("Dealer busted.")
+        dealerstatus = "bust"
+        print(f"Dealer busted with {checkvalue(dealerhand)} and cards {dealerhand}.")
     elif(checkvalue(dealerhand))<17:
         dealerhand.append(shuffled[0])
         shuffled.pop(0)
-    elif(checkvalue(dealerhand)==17 and True:
-            #replace true with checking for soft 17
+    elif checkvalue(dealerhand)==17 and dealersoft == "Soft":
             dealerhand.append(shuffled[0])
             shuffled.pop(0)
+    elif any([checkBJ(dealerhand)=="BJ",checkAJ(dealerhand)=="AJ",checkAJ(dealerhand)=="SPAJ"]):
+        dealerstatus = "BJ"
+        print("Dealer has blackjack.")
     else:
-        dealerstatus == "stand"
-        print(f"Dealer stands on {checkvalue(dealerhand}.")
-
-                    
-                    
+        dealerstatus = "stand"
+        print(f"Dealer stands on {checkvalue(dealerhand)} with cards {dealerhand}.")
+#scoring?
