@@ -1,12 +1,19 @@
-#import, pygame is unused for now but will be used to add graphics later
+#import
 import random
 #declare variables ahead of time for cleanness
+juckport = 10000
 dealerbet = 5
 tatsuyabet = 0
 eikichibet = 0
 ginkobet = 0
 mayabet = 0
 yukkibet = 0
+dealerpayout = 0
+tatsuyapayout = 0
+eikichipayout = 0
+ginkopayout = 0
+mayapayout = 0
+yukkipayout = 0
 dealerstatus = "active"
 tatsuyastatus = "active"
 eikichistatus = "active"
@@ -32,6 +39,7 @@ players = ["Dealer", "Tatsuya", "Eikichi", "Ginko", "Maya", "Yukki"]
 playerhands = {"Dealer":dealerhand, "Tatsuya": tatsuyahand, "Eikichi": eikichihand, "Ginko": ginkohand, "Maya": mayahand, "Yukki": yukkihand}
 playerstatus = {"Dealer":dealerstatus, "Tatsuya": tatsuyastatus, "Eikichi": eikichistatus, "Ginko": ginkostatus, "Maya": mayastatus, "Yukki": yukkistatus}
 playermove = {"Dealer":dealermove, "Tatsuya": tatsuyamove, "Eikichi": eikichimove, "Ginko": ginkomove, "Maya": mayamove, "Yukki": yukkimove}
+playerpayouts = {"Dealer":dealerpayout, "Tatsuya": tatsuyapayout, "Eikichi": eikichipayout, "Ginko": ginkopayout, "Maya": mayapayout, "Yukki": yukkipayout}
 suits = ["♠","♥","♣","♦"]
 dealersoft = "Hard"
 #add cards to deck
@@ -131,7 +139,7 @@ def istripleseven(hand):
         return all([hand[0][0]==7, hand[1][0]==7, hand[2][0]==7])
 def isjuckport(hand):
     if len(hand)==6:
-        pass
+        return ((any([hand[0][0]=="A",hand[1][0]=="A",hand[2][0]=="A",hand[3][0]=="A",hand[4][0]=="A",hand[5][0]=="A"])) and (any([hand[0][0]=="2",hand[1][0]=="2",hand[2][0]=="2",hand[3][0]=="2",hand[4][0]=="2",hand[5][0]=="2"])) and (any([hand[0][0]=="3",hand[1][0]=="3",hand[2][0]=="3",hand[3][0]=="3",hand[4][0]=="3",hand[5][0]=="3"])) and (any([hand[0][0]=="4",hand[1][0]=="4",hand[2][0]=="4",hand[3][0]=="4",hand[4][0]=="4",hand[5][0]=="4"])) and (any([hand[0][0]=="5",hand[1][0]=="5",hand[2][0]=="5",hand[3][0]=="5",hand[4][0]=="5",hand[5][0]=="5"])) and (any([hand[0][0]=="6",hand[1][0]=="6",hand[2][0]=="6",hand[3][0]=="6",hand[4][0]=="6",hand[5][0]=="6"])))
 #game start
 playerstatus.pop("Dealer")
 while "active" in playerstatus.values():
@@ -142,16 +150,18 @@ while "active" in playerstatus.values():
             if checkvalue(playerhands[player])>21:
                 print(f"{player} busted")
                 playerstatus[player] = "bust"
-            elif checkAJ(player) == "SPAJ":
+            elif checkAJ(playerhands[player]) == "SPAJ":
                 print(f"{player} has a spade ace-jack. Standing")
                 playerstatus[player] = "SPAJ"
-            elif checkAJ(player) == "AJ":
+            elif checkAJ(playerhands[player]) == "AJ":
                 print(f"{player} has an ace-jack. Standing.")
-                playerstatus[player]= "AJ"
-            elif checkBJ(player) == "BJ":
+                playerstatus[player] = "AJ"
+            elif checkBJ(playerhands[player]) == "BJ":
                 print(f"{player} has a blackjack. Standing.")
                 playerstatus[player] = "BJ"
-                print("googer")
+            elif issevencards(playerhands[player]):
+                print(f"{player} has seven cards. Standing.")
+                playerstatus[player] = "tripleseven"
             elif len(playerhands[player]) == 2:
                 if playerstatus[player] == "active" and not (playerhands[player][0][0]==playerhands[player][1][0]):
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, or T to double down.")
@@ -226,3 +236,35 @@ while(dealerstatus == "active"):
         dealerstatus = "stand"
         print(f"Dealer stands on {checkvalue(dealerhand)} with cards {dealerhand}.")
 #scoring?
+for player in players[1:]:
+    if isjuckport(playerhands[player]):
+        if playerbets[player] > 9:
+            playerpayouts[player] = juckport
+        else:
+            playerpayouts[player] = playerbets[player] * 1 #replace 1 with juckport mult please
+    elif istripleseven(playerhands[player]) or checkAJ(playerhands[player]) == "SPAJ":
+        playerpayouts[player] = playerbets[player]*100
+    elif issevencards(playerhands[player]) or checkAJ(playerhands[player])=="AJ":
+        playerpayouts[player] = playerbets[player]*50
+    elif issixcards(playerhands[player]):
+        playerpayouts[player] = playerbets[player]*20
+    elif checkBJ(playerhands[player]) == "BJ":
+        if dealerstatus != "BJ":
+            playerpayouts[player] = playerbets[player]*3
+        else:
+            playerpayouts[player] = playerbets[player]
+    elif dealerstatus == "BJ":
+        playerpayouts[player] = 0
+    elif playerstatus[player] == "bust":
+        playerpayouts[player] = 0
+    elif dealerstatus == "bust":
+        playerpayouts[player] = playerbets[player]*2
+    elif checkvalue(playerhands[player]) > checkvalue(dealerhand):
+        playerpayouts[player] = playerbets[player]*2
+    elif checkvalue(playerhands[player]) == checkvalue(dealerhand):
+        playerpayouts[player] = playerbets[player]
+    else:
+        playerpayouts[player] = 0
+    #test payouts
+for player in players[1:]:
+    print(f"{player} wins {playerpayouts[player]} chips.")
