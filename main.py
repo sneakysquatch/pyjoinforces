@@ -136,7 +136,7 @@ def issevencards(hand):
     return len(hand)==7
 def istripleseven(hand):
     if len(hand)==3:
-        return all([hand[0][0]==7, hand[1][0]==7, hand[2][0]==7])
+        return all([hand[0][0]=="7", hand[1][0]=="7", hand[2][0]=="7"])
 def isjuckport(hand):
     if len(hand)==6:
         return ((any([hand[0][0]=="A",hand[1][0]=="A",hand[2][0]=="A",hand[3][0]=="A",hand[4][0]=="A",hand[5][0]=="A"])) and (any([hand[0][0]=="2",hand[1][0]=="2",hand[2][0]=="2",hand[3][0]=="2",hand[4][0]=="2",hand[5][0]=="2"])) and (any([hand[0][0]=="3",hand[1][0]=="3",hand[2][0]=="3",hand[3][0]=="3",hand[4][0]=="3",hand[5][0]=="3"])) and (any([hand[0][0]=="4",hand[1][0]=="4",hand[2][0]=="4",hand[3][0]=="4",hand[4][0]=="4",hand[5][0]=="4"])) and (any([hand[0][0]=="5",hand[1][0]=="5",hand[2][0]=="5",hand[3][0]=="5",hand[4][0]=="5",hand[5][0]=="5"])) and (any([hand[0][0]=="6",hand[1][0]=="6",hand[2][0]=="6",hand[3][0]=="6",hand[4][0]=="6",hand[5][0]=="6"])))
