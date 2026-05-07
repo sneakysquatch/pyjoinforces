@@ -1,6 +1,5 @@
 #import, pygame is unused for now but will be used to add graphics later
 import random
-import pygame
 #declare variables ahead of time for cleanness
 dealerbet = 5
 tatsuyabet = 0
@@ -129,12 +128,7 @@ def issevencards(hand):
     return len(hand)==7
 def istripleseven(hand):
     if len(hand)==3:
-        if (hand[0][0]==7 and hand[1][0]==7 and hand[2][0]==7):
-            return True
-        else:
-            return False
-    else:
-        return False
+        return all([hand[0][0]==7, hand[1][0]==7, hand[2][0]==7])
 def isjuckport(hand):
     if len(hand)==6:
         pass
@@ -173,8 +167,14 @@ while "active" in playerstatus.values():
                     if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
                     if playermove[player].upper() == "T":
-                        #need to figure out how DD works pass for now
-                        pass
+                        playerbets[player]*=2
+                        playerhands[player].append(shuffled[0])
+                        shuffled.pop(0)
+                        if checkvalue(playerhands[player])>21:
+                            print(f"{player} busted")
+                            playerstatus[player] = "bust"
+                        else:
+                            playerstatus[player] = "stand"
                 elif playerstatus[player] == "active" and (playerhands[player][0][0]==playerhands[player][1][0]):
                     print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit, O to stand, S to split, or T to double down.")
                     while True:
@@ -189,8 +189,9 @@ while "active" in playerstatus.values():
                     if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
                     if playermove[player].upper() == "T":
-                        #need to figure out how DD works pass for now
-                        pass
+                        playerbets[player]*=2
+                        playerhands[player].append(shuffled[0])
+                        shuffled.pop(0)
                     if playermove[player].upper() == "S":
                         #split is a wip
                         pass
