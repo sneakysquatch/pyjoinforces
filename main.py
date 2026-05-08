@@ -204,7 +204,20 @@ while "active" in playerstatus.values():
                         shuffled.pop(0)
                     if playermove[player].upper() == "S":
                         #split is a wip
-                        pass
+                        playerhands.update({f"{player} Split":[]})
+                        playerbets.update({f"{player} Split":playerbets[player]})
+                        playerpayouts.update({f"{player} Split":0})
+                        players.append(f"{player} Split")
+                        playermove.update({f"{player} Split":None})
+                        playerstatus.update({f"{player} Split":"active"})
+                        playerhands[f"{player} Split"].append(playerhands[player][1])
+                        playerhands[player].pop()
+                        playerhands[player].append(shuffled[0])
+                        shuffled.pop(0)
+                        playerhands[f"{player} Split"].append(shuffled[0])
+                        shuffled.pop(0)
+                        print(f"{player} now has {playerhands[player]} with value {checkvalue(playerhands[player])}")
+                        print(f"{f"{player} Split"} now has {playerhands[f"{player} Split"]} with value {checkvalue(playerhands[f"{player} Split"])}")
             elif playerstatus[player] == "active":
                 print(f"{player} has {playerhands[player]} with value {checkvalue(playerhands[player])}. Choose X to hit or O to stand.")
                 while True:
@@ -241,7 +254,7 @@ for player in players[1:]:
         if playerbets[player] > 9:
             playerpayouts[player] = juckport
         else:
-            playerpayouts[player] = playerbets[player] * 1 #replace 1 with juckport mult please
+            playerpayouts[player] = playerbets[player] * 1000 #need to verify
     elif istripleseven(playerhands[player]) or checkAJ(playerhands[player]) == "SPAJ":
         playerpayouts[player] = playerbets[player]*100
     elif issevencards(playerhands[player]) or checkAJ(playerhands[player])=="AJ":
@@ -268,3 +281,6 @@ for player in players[1:]:
     #test payouts
 for player in players[1:]:
     print(f"{player} wins {playerpayouts[player]} chips.")
+print(f"Total bet: {sum(list(playerbets.values())[1:])}")
+print(f"Total payout: {sum(list(playerpayouts.values())[1:])
+}")
