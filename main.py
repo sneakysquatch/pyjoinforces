@@ -283,4 +283,3 @@ for player in players[1:]:
     print(f"{player} wins {playerpayouts[player]} chips.")
 print(f"Total bet: {sum(list(playerbets.values())[1:])}")
 print(f"Total payout: {sum(list(playerpayouts.values())[1:])
-}")
