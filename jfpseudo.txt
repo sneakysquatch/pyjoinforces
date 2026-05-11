@@ -1,0 +1,6 @@
+import random and sys
+check(password), if password correct: continue else sys quit
+declare(juckport,(player)bets,player(payouts),player(statues),decks,player(hands),player(moves),suits)
+
+
+
