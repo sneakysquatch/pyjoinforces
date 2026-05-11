@@ -1,3 +1,13 @@
+#reflection
+"""
+yellowpkspe [The rubric says name but this is a public repo so yellowpkspe]
+5/11/2026
+While working on this project, I was surprised how easy it was to do things like construct and shuffle a deck, score bets, and deal cards. I had difficulties
+with bugs mostly stemming from typos like mixing up my =s and ==s. My dad helped me with some debugging, and helped me by giving me ideas on how to implement certain
+functions. I feel proud of this project, because I was able to fully implement every feature of the original game, working almost exactly like the game does. If I had
+more time to work on my project, I would try to add graphics.
+
+"""
 #import
 import random
 import sys
