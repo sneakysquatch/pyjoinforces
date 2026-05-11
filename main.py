@@ -1,5 +1,9 @@
 #import
 import random
+import sys
+#password??? rubric says i need a password not sure why
+if not input("input password (the password is password123) ") == "password123":
+    sys.exit()
 #declare variables ahead of time for cleanness
 juckport = 10000
 dealerbet = 5
