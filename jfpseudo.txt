@@ -1,6 +1,19 @@
 import random and sys
 check(password), if password correct: continue else sys quit
 declare(juckport,(player)bets,player(payouts),player(statues),decks,player(hands),player(moves),suits)
+add A-K for each suit
+shuffle cards
+take all bets
+check the validity of bets
+deal 2 cards to each player
+print special hand if applicable, numerical value otherwise
+>-->check player status
+|   if active
+|   prompt moves
+^--<execute moves
+dealer plays until bust or >h17
+check payouts
+print payouts
 
 
 
