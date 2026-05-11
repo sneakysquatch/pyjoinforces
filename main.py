@@ -53,7 +53,9 @@ for item in ["♠","♥","♣","♦"]:
         unshuffled.append(face+item)
         shuffled.append(face+item)
 random.shuffle(shuffled)
-#check bets
+"""
+takes bet as number and checks if its valid
+"""
 def validbet(bet):
     return bet > -1 and bet < 11
 #input bets
@@ -84,7 +86,11 @@ for player in players[1:]:
     if playerbets[player]!=0:
         print(f"{player}'s Hand: {str((playerhands[player]))}")
 #functions for checking hands
+
 def checkAJ(hand):
+    """
+    checks if hand has an ace-jack or spade-ace-jack. takes hand as input
+    """
     if ((hand[0][0]=="A" or hand[1][0]=="A") and (hand[0][0]=="J" or hand[1][0]=="J")) and (hand[0][1] == hand[1][1]):
         if hand[0][1] == "♠":
             return "SPAJ"
@@ -92,7 +98,11 @@ def checkAJ(hand):
             return "AJ"
     else:
         return "NoAJ"
+
 def checkBJ(hand):
+    """
+    checks if hand has a blackjack. takes hand as input
+    """
     if (checkAJ(hand)=="NoAJ") and (hand[0][0]=="A" or hand[1][0]=="A") and ((hand[0][0]=="1" or hand[1][0]=="1")or(hand[0][0]=="J" or hand[1][0]=="J")or(hand[0][0]=="Q" or hand[1][0]=="Q")or(hand[0][0]=="K" or hand[1][0]=="K")):
         return "BJ"
     else:
@@ -101,6 +111,9 @@ def checkBJ(hand):
 #    print(f"{player} has: {checkAJ(playerhands[player])} {checkBJ(playerhands[player])}")
 #figure out the numerical value of a given hand idk
 def checkvalue(hand):
+    """
+    checks the numerical value of a hand. takes hand as input
+    """
     for card in hand:
         if(card[0]=="A"):
             hand.append(card)
@@ -134,13 +147,25 @@ for player in players[1:]:
                 print(checkvalue(playerhands[player]))
 #define special hand checkers
 def issixcards(hand):
+    """
+    checks if a hand satisfies the conditions for a six-card bonus. takes hand as input
+    """
     return len(hand)==6
 def issevencards(hand):
+    """
+    checks if a hand satisfies the conditions for a seven-card bonus. takes hand as input
+    """
     return len(hand)==7
 def istripleseven(hand):
+    """
+    checks if a hand satisfies the conditions for a triple-seven bonus. takes hand as input
+    """
     if len(hand)==3:
         return all([hand[0][0]=="7", hand[1][0]=="7", hand[2][0]=="7"])
 def isjuckport(hand):
+    """
+    checks if a hand satisfies the conditions for a jackpot bonus. takes hand as input
+    """
     if len(hand)==6:
         return ((any([hand[0][0]=="A",hand[1][0]=="A",hand[2][0]=="A",hand[3][0]=="A",hand[4][0]=="A",hand[5][0]=="A"])) and (any([hand[0][0]=="2",hand[1][0]=="2",hand[2][0]=="2",hand[3][0]=="2",hand[4][0]=="2",hand[5][0]=="2"])) and (any([hand[0][0]=="3",hand[1][0]=="3",hand[2][0]=="3",hand[3][0]=="3",hand[4][0]=="3",hand[5][0]=="3"])) and (any([hand[0][0]=="4",hand[1][0]=="4",hand[2][0]=="4",hand[3][0]=="4",hand[4][0]=="4",hand[5][0]=="4"])) and (any([hand[0][0]=="5",hand[1][0]=="5",hand[2][0]=="5",hand[3][0]=="5",hand[4][0]=="5",hand[5][0]=="5"])) and (any([hand[0][0]=="6",hand[1][0]=="6",hand[2][0]=="6",hand[3][0]=="6",hand[4][0]=="6",hand[5][0]=="6"])))
 #game start
