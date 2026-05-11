@@ -53,8 +53,11 @@ for item in ["♠","♥","♣","♦"]:
         unshuffled.append(face+item)
         shuffled.append(face+item)
 random.shuffle(shuffled)
+#check bets
 def validbet(bet):
     return bet > -1 and bet < 11
+#input bets
+print("Input bets from 1 to 10")
 while True:
     try:
         tatsuyabet = int(input("Input Tatsuya's bet "))
@@ -69,6 +72,7 @@ while True:
         break
     print("One or more invalid bets. Please input all bets as a valid number and bet on at least one player.")
 playerbets = {"Dealer":dealerbet, "Tatsuya": tatsuyabet, "Eikichi": eikichibet, "Ginko": ginkobet, "Maya": mayabet, "Yukki": yukkibet}
+#draw cards
 for player in players:
     if playerbets[player]!=0:
         playerhands[player].append(shuffled[0])
@@ -93,7 +97,6 @@ def checkBJ(hand):
         return "BJ"
     else:
         return "NoBJ"
-#test for checking hands
 #for player in players:
 #    print(f"{player} has: {checkAJ(playerhands[player])} {checkBJ(playerhands[player])}")
 #figure out the numerical value of a given hand idk
@@ -232,6 +235,7 @@ while "active" in playerstatus.values():
                 if playermove[player].upper() == "O":
                         playerstatus[player]= "stand"
 playerstatus.update({"Dealer":dealerstatus})
+#dealer play
 while(dealerstatus == "active"):
     if(checkvalue(dealerhand))>21:
         dealerstatus = "bust"
